@@ -19,9 +19,18 @@ const getBaseUrl = (): string => {
     return "http://localhost:3000";
 };
 
-export const fetchTableData = async (): Promise<User[]> => {
+export const fetchUsers = async (): Promise<User[]> => {
     const baseUrl = getBaseUrl();
     const res = await fetch(`${baseUrl}/users`);
+    if (!res.ok) {
+        throw new Error("Failed to fetch users");
+    }
+    return res.json();
+};
+
+export const fetchDevelopers = async (): Promise<User[]> => {
+    const baseUrl = getBaseUrl();
+    const res = await fetch(`${baseUrl}/developers`);
     if (!res.ok) {
         throw new Error("Failed to fetch users");
     }

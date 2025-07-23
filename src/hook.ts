@@ -1,10 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchTableData } from "./api";
+import { fetchUsers, fetchDevelopers } from "./api";
 
 export const useGetUsers = () => {
     const { data: users, isLoading } = useQuery({
         queryKey: ["users"],
-        queryFn: fetchTableData,
+        queryFn: fetchUsers,
     });
     return { users, isLoading };
+};
+
+export const useGetDevelopers = () => {
+    const { data: developers, isLoading } = useQuery({
+        queryKey: ["developers"],
+        queryFn: fetchDevelopers,
+    });
+    return { developers, isLoading };
 };
