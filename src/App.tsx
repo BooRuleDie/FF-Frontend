@@ -3,6 +3,7 @@ import { Table, Spin, Tag } from "antd";
 import type { TableProps } from "antd";
 import type { User } from "./api";
 import { useGetUsers } from "./hook";
+import { useFlag } from "@unleash/proxy-client-react";
 
 const columns: TableProps<User>["columns"] = [
     {
@@ -45,6 +46,7 @@ const columns: TableProps<User>["columns"] = [
 
 const App: React.FC = () => {
     const { users, isLoading } = useGetUsers();
+    const isFlagDeveloperUsersEnabled = useFlag("developer-users");
 
     return (
         <div className="bg-gray-100 h-screen">
@@ -61,6 +63,22 @@ const App: React.FC = () => {
                         className="max-w-200 bg-white rounded-2xl border border-gray-200 shadow-md pt-2 overflow-x-auto"
                     />
                 )}
+                {isFlagDeveloperUsersEnabled ? (
+                    <>
+                        <h1 className="my-3 text-xl font-bold">Developers</h1>
+                        {isLoading ? (
+                            <div className="flex justify-center items-center h-64">
+                                <Spin size="large" />
+                            </div>
+                        ) : (
+                            <Table<User>
+                                columns={columns}
+                                dataSource={users}
+                                className="max-w-200 bg-white rounded-2xl border border-gray-200 shadow-md pt-2 overflow-x-auto"
+                            />
+                        )}
+                    </>
+                ) : null}
             </div>
         </div>
     );
