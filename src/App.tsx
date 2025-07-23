@@ -1,85 +1,13 @@
 import React from "react";
-import { Table, Spin, Tag } from "antd";
-import type { TableProps } from "antd";
-import type { User } from "./api";
-import { useGetUsers, useGetDevelopers } from "./hook";
-import { useFlag } from "@unleash/proxy-client-react";
-
-const columns: TableProps<User>["columns"] = [
-    {
-        title: "Name",
-        dataIndex: "name",
-        key: "name",
-        render: (text) => <a>{text}</a>,
-    },
-    {
-        title: "Age",
-        dataIndex: "age",
-        key: "age",
-    },
-    {
-        title: "Address",
-        dataIndex: "address",
-        key: "address",
-    },
-    {
-        title: "Tags",
-        key: "tags",
-        dataIndex: "tags",
-        render: (_, { tags }) => (
-            <>
-                {tags.map((tag) => {
-                    let color = tag.length > 5 ? "geekblue" : "green";
-                    if (tag === "loser") {
-                        color = "volcano";
-                    }
-                    return (
-                        <Tag color={color} key={tag}>
-                            {tag.toUpperCase()}
-                        </Tag>
-                    );
-                })}
-            </>
-        ),
-    },
-];
+import { Users } from "./components/Users";
+import { Developers } from "./components/Developers";
 
 const App: React.FC = () => {
-    const { users, isLoading: isLoadingUsers } = useGetUsers();
-    const { developers, isLoading: isLoadingDevelopers } = useGetDevelopers();
-    const isFlagDeveloperUsersEnabled = useFlag("developer-users");
-
     return (
-        <div className="bg-gray-100 h-screen">
-            <div className="flex flex-col justify-center items-center p-10">
-                <h1 className="mb-3 text-xl font-bold">Users</h1>
-                {isLoadingUsers ? (
-                    <div className="flex justify-center items-center h-64">
-                        <Spin size="large" />
-                    </div>
-                ) : (
-                    <Table<User>
-                        columns={columns}
-                        dataSource={users}
-                        className="max-w-200 bg-white rounded-2xl border border-gray-200 shadow-md pt-2 overflow-x-auto"
-                    />
-                )}
-                {isFlagDeveloperUsersEnabled ? (
-                    <>
-                        <h1 className="my-3 text-xl font-bold">Developers</h1>
-                        {isLoadingDevelopers ? (
-                            <div className="flex justify-center items-center h-64">
-                                <Spin size="large" />
-                            </div>
-                        ) : (
-                            <Table<User>
-                                columns={columns}
-                                dataSource={developers}
-                                className="max-w-200 bg-white rounded-2xl border border-gray-200 shadow-md pt-2 overflow-x-auto"
-                            />
-                        )}
-                    </>
-                ) : null}
+        <div className="bg-gray-100 min-h-screen">
+            <div className="flex flex-col justify-center items-center p-10 gap-4">
+                <Users />
+                <Developers />
             </div>
         </div>
     );
