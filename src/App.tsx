@@ -1,10 +1,50 @@
 import React from "react";
-import { Table, Spin } from "antd";
-import type { DataType } from "./api";
+import { Table, Spin, Tag } from "antd";
+import type { TableProps } from "antd";
+import type { User } from "./api";
 import { useGetUsers } from "./hook";
 
+const columns: TableProps<User>["columns"] = [
+    {
+        title: "Name",
+        dataIndex: "name",
+        key: "name",
+        render: (text) => <a>{text}</a>,
+    },
+    {
+        title: "Age",
+        dataIndex: "age",
+        key: "age",
+    },
+    {
+        title: "Address",
+        dataIndex: "address",
+        key: "address",
+    },
+    {
+        title: "Tags",
+        key: "tags",
+        dataIndex: "tags",
+        render: (_, { tags }) => (
+            <>
+                {tags.map((tag) => {
+                    let color = tag.length > 5 ? "geekblue" : "green";
+                    if (tag === "loser") {
+                        color = "volcano";
+                    }
+                    return (
+                        <Tag color={color} key={tag}>
+                            {tag.toUpperCase()}
+                        </Tag>
+                    );
+                })}
+            </>
+        ),
+    },
+];
+
 const App: React.FC = () => {
-    const { data, isLoading } = useGetUsers();
+    const { users, isLoading } = useGetUsers();
 
     return (
         <div className="bg-gray-100 h-screen">
@@ -15,9 +55,9 @@ const App: React.FC = () => {
                         <Spin size="large" />
                     </div>
                 ) : (
-                    <Table<DataType>
-                        columns={data?.columns}
-                        dataSource={data?.data}
+                    <Table<User>
+                        columns={columns}
+                        dataSource={users}
                         className="max-w-200 bg-white rounded-2xl border border-gray-200 shadow-md pt-2 overflow-x-auto"
                     />
                 )}

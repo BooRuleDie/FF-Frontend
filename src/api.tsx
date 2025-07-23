@@ -1,7 +1,4 @@
-import { Tag } from "antd";
-import type { TableProps } from "antd";
-
-export interface DataType {
+export interface User {
     key: string;
     name: string;
     age: number;
@@ -9,78 +6,24 @@ export interface DataType {
     tags: string[];
 }
 
-const columns: TableProps<DataType>["columns"] = [
-    {
-        title: "Name",
-        dataIndex: "name",
-        key: "name",
-        render: (text) => <a>{text}</a>,
-    },
-    {
-        title: "Age",
-        dataIndex: "age",
-        key: "age",
-    },
-    {
-        title: "Address",
-        dataIndex: "address",
-        key: "address",
-    },
-    {
-        title: "Tags",
-        key: "tags",
-        dataIndex: "tags",
-        render: (_, { tags }) => (
-            <>
-                {tags.map((tag) => {
-                    let color = tag.length > 5 ? "geekblue" : "green";
-                    if (tag === "loser") {
-                        color = "volcano";
-                    }
-                    return (
-                        <Tag color={color} key={tag}>
-                            {tag.toUpperCase()}
-                        </Tag>
-                    );
-                })}
-            </>
-        ),
-    },
-];
+// Determine base URL based on window.origin
+const getBaseUrl = (): string => {
+    if (typeof window === "undefined") return "http://localhost:3000";
+    const origin = window.origin;
+    if (origin.includes("dev.booruledie.com")) {
+        return "https://dev.booruledie.com";
+    }
+    if (origin.includes("booruledie.com")) {
+        return "https://booruledie.com";
+    }
+    return "http://localhost:3000";
+};
 
-const data: DataType[] = [
-    {
-        key: "1",
-        name: "John Brown",
-        age: 32,
-        address: "New York No. 1 Lake Park",
-        tags: ["nice", "developer"],
-    },
-    {
-        key: "2",
-        name: "Jim Green",
-        age: 42,
-        address: "London No. 1 Lake Park",
-        tags: ["loser"],
-    },
-    {
-        key: "3",
-        name: "Joe Black",
-        age: 32,
-        address: "Sydney No. 1 Lake Park",
-        tags: ["cool", "teacher"],
-    },
-];
-
-// Dummy API call
-export const fetchTableData = async (): Promise<{
-    data: DataType[];
-    columns: typeof columns;
-}> => {
-    // Simulate API delay
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    return {
-        data,
-        columns,
-    };
+export const fetchTableData = async (): Promise<User[]> => {
+    const baseUrl = getBaseUrl();
+    const res = await fetch(`${baseUrl}/users`);
+    if (!res.ok) {
+        throw new Error("Failed to fetch users");
+    }
+    return res.json();
 };
