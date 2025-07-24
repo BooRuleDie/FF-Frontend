@@ -36,3 +36,12 @@ export const fetchDevelopers = async (): Promise<User[]> => {
     }
     return res.json();
 };
+
+export const fetchAdmins = async (): Promise<User[]> => {
+    const baseUrl = getBaseUrl();
+    const res = await fetch(`${baseUrl}/api/admins`);
+    if (!res.ok) {
+        throw new Error("Failed to fetch users");
+    }
+    return res.json();
+};
