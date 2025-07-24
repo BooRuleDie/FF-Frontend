@@ -23,6 +23,4 @@ dist-ssr
 *.sln
 *.sw?
 
-# since it's frontend tokens will be public as well 
-# no need to gitingore them
-#.env*
+.env*

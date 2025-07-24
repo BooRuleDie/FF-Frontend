@@ -8,7 +8,7 @@ export interface User {
 
 // Determine base URL based on window.origin
 const getBaseUrl = (): string => {
-    if (typeof window === "undefined") return "http://localhost:3000";
+    if (typeof window === "undefined") return "http://localhost:3001";
     const origin = window.origin;
     if (origin.includes("dev.booruledie.com")) {
         return "https://dev.booruledie.com";
@@ -16,12 +16,12 @@ const getBaseUrl = (): string => {
     if (origin.includes("booruledie.com")) {
         return "https://booruledie.com";
     }
-    return "http://localhost:3000";
+    return "http://localhost:3001";
 };
 
 export const fetchUsers = async (): Promise<User[]> => {
     const baseUrl = getBaseUrl();
-    const res = await fetch(`${baseUrl}/users`);
+    const res = await fetch(`${baseUrl}/api/users`);
     if (!res.ok) {
         throw new Error("Failed to fetch users");
     }
@@ -30,7 +30,7 @@ export const fetchUsers = async (): Promise<User[]> => {
 
 export const fetchDevelopers = async (): Promise<User[]> => {
     const baseUrl = getBaseUrl();
-    const res = await fetch(`${baseUrl}/developers`);
+    const res = await fetch(`${baseUrl}/api/developers`);
     if (!res.ok) {
         throw new Error("Failed to fetch users");
     }
