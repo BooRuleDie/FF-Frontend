@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchUsers, fetchDevelopers } from "./api";
+import { fetchUsers, fetchDevelopers, fetchAdmins } from "./api";
 
 export const useGetUsers = () => {
     const { data: users, isLoading } = useQuery({
@@ -15,4 +15,12 @@ export const useGetDevelopers = () => {
         queryFn: fetchDevelopers,
     });
     return { developers, isLoading };
+};
+
+export const useGetAdmins = () => {
+    const { data: admins, isLoading } = useQuery({
+        queryKey: ["admins"],
+        queryFn: fetchAdmins,
+    });
+    return { admins, isLoading };
 };
