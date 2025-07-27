@@ -2,7 +2,6 @@ import React from "react";
 import { Users } from "./components/Users";
 import { Developers } from "./components/Developers";
 import { Admins } from "./components/Admins";
-import { Moderators } from "./components/Moderators";
 
 const App: React.FC = () => {
     return (
@@ -11,7 +10,6 @@ const App: React.FC = () => {
                 <Users />
                 <Developers />
                 <Admins/>
-                <Moderators/>
             </div>
         </div>
     );

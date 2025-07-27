@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchUsers, fetchDevelopers, fetchAdmins, fetchModerators } from "./api";
+import { fetchUsers, fetchDevelopers, fetchAdmins } from "./api";
 
 export const useGetUsers = () => {
     const { data: users, isLoading } = useQuery({
@@ -23,12 +23,4 @@ export const useGetAdmins = () => {
         queryFn: fetchAdmins,
     });
     return { admins, isLoading };
-};
-
-export const useGetModerators = () => {
-    const { data: moderators, isLoading } = useQuery({
-        queryKey: ["moderators"],
-        queryFn: fetchModerators,
-    });
-    return { moderators, isLoading };
 };
