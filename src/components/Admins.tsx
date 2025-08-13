@@ -47,7 +47,7 @@ const columns: TableProps<User>["columns"] = [
 
 export const Admins: React.FC = () => {
     const { admins, isLoading: isLoadingAdmins } = useGetAdmins();
-    const isFlagAdminUsersEnabled = useFlag("admin-users");
+    const isFlagAdminUsersEnabled = useFlag("admins");
     
     if (!isFlagAdminUsersEnabled) return ""
 

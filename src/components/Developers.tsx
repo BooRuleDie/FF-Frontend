@@ -47,7 +47,7 @@ const columns: TableProps<User>["columns"] = [
 
 export const Developers: React.FC = () => {
     const { developers, isLoading: isLoadingDevelopers } = useGetDevelopers();
-    const isFlagDeveloperUsersEnabled = useFlag("developer-users");
+    const isFlagDeveloperUsersEnabled = useFlag("developers");
     
     if (!isFlagDeveloperUsersEnabled) return ""
 

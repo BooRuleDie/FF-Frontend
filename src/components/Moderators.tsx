@@ -47,7 +47,7 @@ const columns: TableProps<User>["columns"] = [
 
 export const Moderators: React.FC = () => {
     const { moderators, isLoading: isLoadingModerators } = useGetModerators();
-    const isFlagModeratorUsersEnabled = useFlag("moderator-users");
+    const isFlagModeratorUsersEnabled = useFlag("moderators");
     
     if (!isFlagModeratorUsersEnabled) return ""
 
